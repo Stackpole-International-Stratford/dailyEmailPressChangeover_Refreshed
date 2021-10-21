@@ -7,6 +7,11 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
 email_config = {
     'server': 'mesg06.stackpole.ca',
     'from': 'cstrutton@stackpole.com',
@@ -21,10 +26,10 @@ email_config = {
 }
 
 db_config = {
-    'user': 'prodmon',
-    'password': 'pm258',
-    'host': '10.4.1.245',
-    'port': 6601,
+    'user': os.getenv('DB_USER'),
+    'password': os.getenv('DB_PASSWORD'),
+    'host': os.getenv('DB_HOST'),
+    'port': os.getenv('DB_PORT'),
     'database': 'prod_mon',
     'raise_on_warnings': True
 }
@@ -186,6 +191,8 @@ def report_html(start, end):
 
 
 if __name__ == '__main__':
+
+
 
     start_time, end_time = shift_times(datetime.now())
     report = report_html(start_time, end_time)
