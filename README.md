@@ -21,4 +21,4 @@ build with:
 
 run with:
 
-`docker run --restart --rm always periodic-py` 
+`docker run -d --restart always ab1v_scrap_email` 
