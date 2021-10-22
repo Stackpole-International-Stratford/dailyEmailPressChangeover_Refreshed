@@ -1,1 +1,2 @@
-*/5 * * * * /usr/bin/sh /example-scheduled-task.sh
+#run python script every minutes
+* * * * * /usr/local/bin/python /app/crontest.py > /proc/1/fd/1 2>/proc/1/fd/2
