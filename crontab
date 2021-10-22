@@ -1,4 +1,4 @@
 SHELL=/bin/bash
-#run python script every minutes
-* * * * * sleep $(($RANDOM\%30 +1)) ; /usr/local/bin/python /app/crontest.py > /proc/1/fd/1 2>/proc/1/fd/2
+# run python script between 7 and 7:30 AM
+* 7 * * * sleep $(($RANDOM\%1800)) ; /usr/local/bin/python /app/main.py > /proc/1/fd/1 2>/proc/1/fd/2
 
