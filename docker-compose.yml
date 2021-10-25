@@ -1,4 +1,4 @@
 version: "3"
 services:
-  AB1V_email:
+  ab1v_scrap_email_cron:
     build: .
