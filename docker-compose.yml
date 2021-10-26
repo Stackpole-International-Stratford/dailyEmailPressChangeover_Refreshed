@@ -1,4 +1,5 @@
 version: "3"
 services:
-  ab1v_scrap_email_cron:
+
+  cron:
     build: .
