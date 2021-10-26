@@ -134,10 +134,10 @@ def reject_part_count(part_number, start_date, end_date):
             results['resonance'] += 1
 
         elif 39 <= failure <= 48:
-            results['Plate PH'] += 1
+            results['plate ph'] += 1
 
         elif 49 <= failure <= 58:
-            results['Ped PH'] += 1
+            results['ped ph'] += 1
 
         elif 65 <= failure <= 68:
             results['laser grade'] += 1
