@@ -143,7 +143,7 @@ def reject_part_count(part_number, start_date, end_date):
             results['laser grade'] += 1
 
         elif 59 <= failure <= 60:
-            results['busing id'] += 1
+            results['bushing id'] += 1
 
         elif 21 <= failure <= 32:
             results['window height'] += 1
@@ -193,8 +193,6 @@ def report_html(start, end):
 
 
 if __name__ == '__main__':
-
-
 
     start_time, end_time = shift_times(datetime.now())
     report = report_html(start_time, end_time)
