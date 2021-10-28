@@ -1,4 +1,4 @@
 SHELL=/bin/bash
 # run python script between 7 and 7:30 AM
-* 7 * * * cd /app; sleep $(($RANDOM\%1800)); /usr/local/bin/python /app/main.py > /proc/1/fd/1 2>/proc/1/fd/2
+0 7 * * * cd /app; sleep $(($RANDOM\%300)); /usr/local/bin/python /app/main.py > /proc/1/fd/1 2>/proc/1/fd/2
 
