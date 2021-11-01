@@ -1,4 +1,5 @@
 import re
+import sys
 from datetime import datetime, timedelta
 import mysql.connector
 import jinja2
@@ -77,9 +78,11 @@ def good_part_count(part_number, start_date, end_date):
     return res[0]
 
 
-def shift_times(date):
+def shift_times(date, offset=None):
     # end_date is this morning at 7am
     end_date = date.replace(hour=7, minute=0, second=0, microsecond=0)
+    if offset:
+        end_date = end_date + timedelta(days=offset)
     # start_date is yesterday morning at 7am
     start_date = end_date - timedelta(hours=24)
     end_date = end_date - timedelta(seconds=1)
@@ -193,7 +196,7 @@ def report_html(start, end):
 
 
 if __name__ == '__main__':
-
+    offset = 0 if len(sys.argv) == 1 else sys.argv[1]
     start_time, end_time = shift_times(datetime.now())
     report = report_html(start_time, end_time)
     message = MIMEMultipart("alternative")
