@@ -10,8 +10,11 @@ from email.mime.multipart import MIMEMultipart
 
 import os
 from dotenv import load_dotenv
+from loguru import logger
 
 load_dotenv()
+
+logger.debug("That's it, beautiful and simple logging!")
 
 email_config = {
     'server': 'mesg06.stackpole.ca',
@@ -195,7 +198,8 @@ def report_html(start, end):
     return template.render(data=data, start=start, end=end)
 
 
-if __name__ == '__main__':
+@logger.catch
+def main():
     offset = 0 if len(sys.argv) == 1 else int(sys.argv[1])
     start_time, end_time = shift_times(datetime.now(), offset)
     report = report_html(start_time, end_time)
@@ -205,7 +209,10 @@ if __name__ == '__main__':
     message["To"] = ", ".join(email_config['to'])
     msg_body = MIMEText(report, "html")
     message.attach(msg_body)
-
     server = smtplib.SMTP(email_config['server'])
     server.sendmail(email_config['from'], email_config['to'], message.as_string())
     server.quit()
+
+
+if __name__ == '__main__':
+    main()
