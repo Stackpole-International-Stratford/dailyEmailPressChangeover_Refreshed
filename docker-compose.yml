@@ -3,3 +3,4 @@ services:
 
   cron:
     build: .
+    restart: unless-stopped
