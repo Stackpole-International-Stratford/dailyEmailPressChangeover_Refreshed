@@ -14,18 +14,18 @@ from loguru import logger
 
 load_dotenv()
 
-logger.debug("That's it, beautiful and simple logging!")
+logger.debug("Running")
 
 email_config = {
     'server': 'mesg06.stackpole.ca',
     'from': 'cstrutton@stackpole.com',
     'to': [
-        # 'dbrenneman@stackpole.com',
-        # 'rzylstra@stackpole.com',
-        # 'dmilne@stackpole.com',
-        # 'lbaker@stackpole.com',
-        # 'jmcmaster@stackpole.com',
-        # 'roberto.jimenez@vantage-corp.com',
+        'dbrenneman@stackpole.com',
+        'rzylstra@stackpole.com',
+        'dmilne@stackpole.com',
+        'lbaker@stackpole.com',
+        'jmcmaster@stackpole.com',
+        'roberto.jimenez@vantage-corp.com',
         'cstrutton@stackpole.com',
     ],
     'subject': 'AB1V Autogauge scrap report'
