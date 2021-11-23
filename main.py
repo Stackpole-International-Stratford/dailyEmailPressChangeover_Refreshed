@@ -85,7 +85,7 @@ def shift_times(date, date_offset=0):
     # end_date is this morning at 7am
     end_date = date.replace(hour=7, minute=0, second=0, microsecond=0)
     # adjust end_date by date_offset days
-    end_date = end_date + timedelta(days=date_offset)
+    end_date = end_date - timedelta(days=date_offset)
     # start_date is yesterday morning at 7am
     start_date = end_date - timedelta(hours=24)
     end_date = end_date - timedelta(seconds=1)
@@ -95,22 +95,23 @@ def shift_times(date, date_offset=0):
 def reject_part_count(part_number, start_date, end_date):
     # initialize empty results object
     results = {
-        'balance hole': 0,
-        'eddy': 0,
-        'resonance': 0,
-        'plate ph': 0,
-        'ped ph': 0,
-        'laser grade': 0,
-        'bushing id': 0,
-        'window height': 0,
-        'lube holes': 0,
-        'staking pocket': 0,
-        'pinion cross hole': 0,
-        'spot face': 0,
-        'stuck media': 0,
-        'upper lower id': 0,
-        'pre existing barcode': 0,
-        'other': 0
+        'spotface': {'label': 'Spot Face', 'count': 0},
+        'media': {'label': 'Media', 'count': 0},
+        'oilholes': {'label': 'Oil Holes', 'count': 0},
+        'induction': {'label': 'Induction', 'count': 0},
+        'balpos': {'label': 'Balance Pos', 'count': 0},
+        'balwitness': {'label': 'Bal Witness Mark', 'count': 0},
+        'winheight': {'label': 'Window Height', 'count': 0},
+        'staking': {'label': 'Staking Pocket', 'count': 0},
+        'pocketholes': {'label': 'Mach Pocket Holes', 'count': 0},
+        'eddy': {'label': 'Eddy Current', 'count': 0},
+        'res': {'label': 'Resonance', 'count': 0},
+        'plateph': {'label': 'Plate PH', 'count': 0},
+        'pedph': {'label': 'Ped PH', 'count': 0},
+        'bushid': {'label': 'Bush ID', 'count': 0},
+        'upid': {'label': 'Upper ID', 'count': 0},
+        'lowerid': {'label': 'Lower ID', 'count': 0},
+        'other': {'label': 'Other', 'count': 0}
     }
 
     cnx = mysql.connector.connect(**db_config)
@@ -130,53 +131,68 @@ def reject_part_count(part_number, start_date, end_date):
         except ValueError:
             failure = -1
 
-        if 11 <= failure <= 13:
-            results['balance hole'] += 1
+        if failure == 8:
+            results['spotface']['count'] += 1
 
-        elif failure == 37:
-            results['eddy'] += 1
+        elif failure == 5:
+            results['media']['count'] += 1
+        elif failure == 8:
+            results['media']['count'] += 1
+        elif failure == 12:
+            results['media']['count'] += 1
+        elif failure == 14:
+            results['media']['count'] += 1
+        elif 17 <= failure <= 21:
+            results['media']['count'] += 1
+        elif failure == 35:
+            results['media']['count'] += 1
 
-        elif failure == 38:
-            results['resonance'] += 1
+        elif failure == 6:
+            results['oilholes']['count'] += 1
+        elif failure == 9:
+            results['oilholes']['count'] += 1
 
-        elif 39 <= failure <= 48:
-            results['plate ph'] += 1
+        elif failure == 10:
+            results['induction']['count'] += 1
 
-        elif 49 <= failure <= 58:
-            results['ped ph'] += 1
+        elif failure == 11:
+            results['balpos']['count'] += 1
 
-        elif 65 <= failure <= 68:
-            results['laser grade'] += 1
-
-        elif 59 <= failure <= 60:
-            results['bushing id'] += 1
+        elif failure == 13:
+            results['balwitness']['count'] += 1
 
         elif 21 <= failure <= 32:
-            results['window height'] += 1
+            results['winheight']['count'] += 1
 
         elif failure == 34:
-            results['staking pocket'] += 1
+            results['staking']['count'] += 1
 
-        elif failure == 9:
-            results['pinion cross hole'] += 1
+        elif failure == 36:
+            results['pocketholes']['count'] += 1
 
-        elif failure == 8:
-            results['spot face'] += 1
+        elif failure == 37:
+            results['eddy']['count'] += 1
 
-        elif 61 <= failure <= 64:
-            results['upper lower id'] += 1
+        elif failure == 38:
+            results['res']['count'] += 1
 
-        elif 14 <= failure <= 20:
-            results['stuck media'] += 1
-        elif failure == 5:
-            results['stuck media'] += 1
-        elif failure == 7:
-            results['stuck media'] += 1
-        elif failure == 12:
-            results['stuck media'] += 1
+        elif 39 <= failure <= 48:
+            results['plateph']['count'] += 1
+
+        elif 49 <= failure <= 58:
+            results['pedph']['count'] += 1
+
+        elif failure == 60:
+            results['bushid']['count'] += 1
+
+        elif failure == 62:
+            results['upid']['count'] += 1
+
+        elif failure == 64:
+            results['lowerid']['count'] += 1
 
         else:
-            results['other'] += 1
+            results['other']['count'] += 1
 
     cursor.close()
     cnx.close()

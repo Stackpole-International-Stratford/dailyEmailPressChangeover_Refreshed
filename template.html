@@ -20,8 +20,8 @@
     <td>{{ part['part_number'] }}</td>
     <td>{{ part['good']}}</td>
     {%- for key, value in part['reject'].items() -%}
-        {%- if value > 0 -%}
-            <td>{{key}}:{{value}}</td>
+        {%- if value['count'] > 0 -%}
+            <td>{{value['label']}}:{{value['count']}}</td>
         {%- endif -%}
     {%- endfor -%}
 </tr>
