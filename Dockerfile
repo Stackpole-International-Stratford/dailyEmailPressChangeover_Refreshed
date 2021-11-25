@@ -1,6 +1,6 @@
 FROM python:3.7
 
-RUN apt-get update && apt-get -y install cron
+RUN apt-get update && apt-get -y install cron nano
 WORKDIR /app
 
 ENV TZ=America/Toronto
