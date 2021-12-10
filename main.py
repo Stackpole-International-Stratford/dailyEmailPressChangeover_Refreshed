@@ -131,63 +131,87 @@ def reject_part_count(part_number, start_date, end_date):
         except ValueError:
             failure = -1
 
-        if failure == 8:
+        if failure == 8:  # Spot face check
             results['spotface']['count'] += 1
 
+        # 5 - Media presence- Braze pellet holes
         elif failure == 5:
             results['media']['count'] += 1
-        elif failure == 8:
+        # 7 - Media presence- Pellet holes
+        elif failure == 7:
             results['media']['count'] += 1
+        # 12 - Media presence bal hole
         elif failure == 12:
             results['media']['count'] += 1
-        elif failure == 14:
+        # 14 - Media presence pinion holes
+        # 15 - Media presence web slot
+        # 16 - Media presence windows
+        # 17 - Media presence Machined Recess plate side
+        # 18 - Media presence blind ped. Holes
+        # 19 - Media presence slot at pinion hole
+        # 20 - Media presence blind pellet holes
+        elif 14 <= failure <= 20:
             results['media']['count'] += 1
-        elif 17 <= failure <= 21:
-            results['media']['count'] += 1
+        # 35 - Media presence Machined recess pedestal side
         elif failure == 35:
             results['media']['count'] += 1
 
+        # 6 - Lube holes
         elif failure == 6:
             results['oilholes']['count'] += 1
+        # 9 - Pinion crosshole presence
         elif failure == 9:
             results['oilholes']['count'] += 1
 
+        # 10 - Induction hardening presence
         elif failure == 10:
             results['induction']['count'] += 1
 
+        # 11 - Balance hole position
         elif failure == 11:
             results['balpos']['count'] += 1
 
+        # 13 - Witness mark
         elif failure == 13:
             results['balwitness']['count'] += 1
 
-        elif 21 <= failure <= 32:
+        # 31 - new window height 'status'
+        elif failure == 31:
             results['winheight']['count'] += 1
 
+        # 34 - Staking pocket presence
         elif failure == 34:
             results['staking']['count'] += 1
 
+        # 36 - Pedestal side Machined pocket holes
         elif failure == 36:
             results['pocketholes']['count'] += 1
 
+        # 37 - Eddy Current Result
         elif failure == 37:
             results['eddy']['count'] += 1
 
+        # 38 - Resonance Result
         elif failure == 38:
             results['res']['count'] += 1
 
+        # 39-48 Plate Pinion Hole Status x5
         elif 39 <= failure <= 48:
             results['plateph']['count'] += 1
 
+        # 49-58 Plate Pinion Hole Status x5
         elif 49 <= failure <= 58:
             results['pedph']['count'] += 1
 
+        # 60 - Bushing ID status
         elif failure == 60:
             results['bushid']['count'] += 1
 
+        # 62 - Upper ID status
         elif failure == 62:
             results['upid']['count'] += 1
 
+        # 64 - Lower ID status
         elif failure == 64:
             results['lowerid']['count'] += 1
 
