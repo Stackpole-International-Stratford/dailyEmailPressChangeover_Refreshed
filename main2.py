@@ -16,23 +16,13 @@ load_dotenv()
 
 logger.debug("Running")
 
+with open('email.lst') as f:
+    email-list = [line.rstrip() for line in f]
+
 email_config = {
     'server': 'mesg06.stackpole.ca',
     'from': 'cstrutton@stackpole.com',
-    'to': [
-        'dclark@stackpole.com',
-        'dbrenneman@stackpole.com',
-        'rzylstra@stackpole.com',
-        'dmilne@stackpole.com',
-        'lbaker@stackpole.com',
-        'jmcmaster@stackpole.com',
-        'PRajapandi@stackpole.com',
-        'roberto.jimenez@vantage-corp.com',
-        'daniel.leija.a@gmail.com',
-        'vredkar@stackpole.com',
-        'akeskar@stackpole.com',
-        'cstrutton@stackpole.com',
-    ],
+    'to': email-list,
     'subject': 'AB1V Autogauge scrap report'
 }
 
