@@ -25,12 +25,11 @@ email_config = {
         'rzylstra@stackpole.com',
         'dmilne@stackpole.com',
         'lbaker@stackpole.com',
-        'jmcmaster@stackpole.com',
+        'gperrier@stackpole.com',
         'PRajapandi@stackpole.com',
         'roberto.jimenez@vantage-corp.com',
         'daniel.leija.a@gmail.com',
         'vredkar@stackpole.com',
-        'akeskar@stackpole.com',
         'cstrutton@stackpole.com',
     ],
     'subject': 'AB1V Autogauge scrap report'
