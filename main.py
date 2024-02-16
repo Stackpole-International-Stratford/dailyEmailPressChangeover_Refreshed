@@ -17,7 +17,7 @@ load_dotenv()
 logger.debug("Running")
 
 email_config = {
-    'server': 'mesg06.stackpole.ca',
+    'server': 'smtp01.stackpole.ca',
     'from': 'cstrutton@stackpole.com',
     'to': [
         'dclark@stackpole.com',
@@ -27,9 +27,9 @@ email_config = {
         'lbaker@stackpole.com',
         'gperrier@stackpole.com',
         'PRajapandi@stackpole.com',
-        'roberto.jimenez@vantage-corp.com',
-        'daniel.leija.a@gmail.com',
-        'vredkar@stackpole.com',
+        'Christian Forero <cforero@stackpole.com>',
+        'Pawel Mlynarski <pawel.mlynarski@johnsonelectric.com>',
+        'Preet Panchal <ppanchal@stackpole.com>',
         'cstrutton@stackpole.com',
     ],
     'subject': 'AB1V Autogauge scrap report'
@@ -115,6 +115,7 @@ def reject_part_count(part_number, start_date, end_date):
         'bushid': {'label': 'Bush ID', 'count': 0},
         'upid': {'label': 'Upper ID', 'count': 0},
         'lowerid': {'label': 'Lower ID', 'count': 0},
+        'psph': ('label': 'PSPH OK', 'count': 0},
         'other': {'label': 'Other', 'count': 0}
     }
 
@@ -135,18 +136,33 @@ def reject_part_count(part_number, start_date, end_date):
         except ValueError:
             failure = -1
 
-        if failure == 8:  # Spot face check
-            results['spotface']['count'] += 1
-
         # 5 - Media presence- Braze pellet holes
-        elif failure == 5:
+        if failure == 5:
             results['media']['count'] += 1
+        # 6 - Lube holes
+        elif failure == 6:
+            results['oilholes']['count'] += 1
         # 7 - Media presence- Pellet holes
         elif failure == 7:
             results['media']['count'] += 1
+        # 8 - Spot face check
+        elif failure == 8:
+            results['spotface']['count'] += 1
+        # 9 - Pinion crosshole presence
+        elif failure == 9:
+            results['oilholes']['count'] += 1
+        # 10 - Induction hardening presence
+        elif failure == 10:
+            results['induction']['count'] += 1
+        # 11 - Balance hole position
+        elif failure == 11:
+            results['balpos']['count'] += 1
         # 12 - Media presence bal hole
         elif failure == 12:
             results['media']['count'] += 1
+        # 13 - Witness mark
+        elif failure == 13:
+            results['balwitness']['count'] += 1
         # 14 - Media presence pinion holes
         # 15 - Media presence web slot
         # 16 - Media presence windows
@@ -156,69 +172,46 @@ def reject_part_count(part_number, start_date, end_date):
         # 20 - Media presence blind pellet holes
         elif 14 <= failure <= 20:
             results['media']['count'] += 1
-        # 35 - Media presence Machined recess pedestal side
-        elif failure == 35:
-            results['media']['count'] += 1
-
-        # 6 - Lube holes
-        elif failure == 6:
-            results['oilholes']['count'] += 1
-        # 9 - Pinion crosshole presence
-        elif failure == 9:
-            results['oilholes']['count'] += 1
-
-        # 10 - Induction hardening presence
-        elif failure == 10:
-            results['induction']['count'] += 1
-
-        # 11 - Balance hole position
-        elif failure == 11:
-            results['balpos']['count'] += 1
-
-        # 13 - Witness mark
-        elif failure == 13:
-            results['balwitness']['count'] += 1
-
+        # 21 - 30: actual window min/max measurements
         # 31 - new window height 'status'
         elif failure == 31:
             results['winheight']['count'] += 1
-
+        # 32: Place Holder
+        # 33: Plate side Pinion Holes OK???
+        elif failure == 33:
+            results['psph']['count'] += 1
         # 34 - Staking pocket presence
         elif failure == 34:
             results['staking']['count'] += 1
-
+        # 35 - Media presence Machined recess pedestal side
+        elif failure == 35:
+            results['media']['count'] += 1
         # 36 - Pedestal side Machined pocket holes
         elif failure == 36:
             results['pocketholes']['count'] += 1
-
         # 37 - Eddy Current Result
         elif failure == 37:
-            results['eddy']['count'] += 1
-
+           results['eddy']['count'] += 1
         # 38 - Resonance Result
         elif failure == 38:
             results['res']['count'] += 1
-
         # 39-48 Plate Pinion Hole Status x5
         elif 39 <= failure <= 48:
             results['plateph']['count'] += 1
-
         # 49-58 Plate Pinion Hole Status x5
         elif 49 <= failure <= 58:
             results['pedph']['count'] += 1
-
-        # 60 - Bushing ID status
-        elif failure == 60:
+        # 59 - 60: Bushing ID status
+        elif 59 <= failure <= 60:
             results['bushid']['count'] += 1
-
-        # 62 - Upper ID status
+        # 61 - 62: Upper ID status
+        elif 61 <= failure <= 62:
         elif failure == 62:
             results['upid']['count'] += 1
-
-        # 64 - Lower ID status
+        # 63 - 64: Lower ID status
+        elif 63 <= failure <= 64:
         elif failure == 64:
             results['lowerid']['count'] += 1
-
         else:
             results['other']['count'] += 1
 
