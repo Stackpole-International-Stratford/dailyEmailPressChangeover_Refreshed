@@ -1,4 +1,4 @@
-# AB1V_Scrap_Report_Email
+# Basic Daily Email Boilerplate
 
 requires a .env file with the following variables:
 - DB_USER
@@ -6,10 +6,18 @@ requires a .env file with the following variables:
 - DB_HOST
 - DB_PORT
 
+requires a distribution list in main.py
+
+requires a report function that returns the report body in HTML
+currently using Jinja2 templates.
+
 ## Usage
+
+Fork this repo giving it a meaningful name
+
 Clone:
 
-`git clone https://github.com/cstrutton/AB1V_Scrap_Report_Email.git`
+`git clone https://github.com/cstrutton/new_report.git`
 
 or update with:
 
@@ -17,10 +25,10 @@ or update with:
 
 build with:
 
-`docker build -t ab1v_scrap_email .`
+`docker build -t new_report .`
 
 run with:
 
-`docker run -d --restart always ab1v_scrap_email` 
+`docker run -d --restart always new_report` 
 
 
