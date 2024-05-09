@@ -102,6 +102,6 @@ def render_report(data, start, end):
         template = env.get_template('template.html')
         return template.render(data=data, start=start, end=end)
     except Exception as e:
-        print(f"Error rendering template: {str(e)}")
+        logger.error(f"Error rendering template: {str(e)}")
         traceback.print_exc()
         raise
