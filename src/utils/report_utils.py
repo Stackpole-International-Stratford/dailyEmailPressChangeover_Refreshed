@@ -34,7 +34,8 @@ def shift_times(date, date_offset=0):
 
 def get_data(start, end):
 #   """
-#     Retrieve data for report generation within the specified time range.
+#     Retrieve data for report generation within the specified time range. This is where you would query the database for data, by replacing the dummy data with
+#     an actual function to do so.
     
 #     Parameters:
 #     start (datetime): The start time for data retrieval.
@@ -68,6 +69,25 @@ def get_data(start, end):
         {'part_number': '5678', 'good': 200, 'reject': {}},
         {'part_number': '2323', 'good': 300, 'reject': {}},
         {'part_number': '1234', 'good': 100, 'reject': {'spotface': {'label': 'Spot Face', 'count': 5}}},
+        {'part_number': '7889', 'good': 150, 'reject': {'burrs': {'label': 'Burrs', 'count': 2}}},
+        {'part_number': '9988', 'good': 250, 'reject': {'warp': {'label': 'Warp', 'count': 1}}},
+        {'part_number': '5467', 'good': 350, 'reject': {'crack': {'label': 'Crack', 'count': 4}}},
+        {'part_number': '2143', 'good': 120, 'reject': {'spotface': {'label': 'Spot Face', 'count': 3}}},
+        {'part_number': '8765', 'good': 220, 'reject': {'media': {'label': 'Media', 'count': 6}}},
+        {'part_number': '3434', 'good': 330, 'reject': {'porosity': {'label': 'Porosity', 'count': 7}}},
+        {'part_number': '1212', 'good': 140, 'reject': {'spotface': {'label': 'Spot Face', 'count': 8}}},
+        {'part_number': '4545', 'good': 230, 'reject': {'deformation': {'label': 'Deformation', 'count': 5}}},
+        {'part_number': '6767', 'good': 340, 'reject': {'paint': {'label': 'Paint Defect', 'count': 2}}},
+        {'part_number': '8989', 'good': 160, 'reject': {'spotface': {'label': 'Spot Face', 'count': 1}}},
+        {'part_number': '1010', 'good': 210, 'reject': {'media': {'label': 'Media', 'count': 3}}},
+        {'part_number': '3232', 'good': 310, 'reject': {}},
+        {'part_number': '5432', 'good': 190, 'reject': {'spotface': {'label': 'Spot Face', 'count': 6}}},
+        {'part_number': '7865', 'good': 205, 'reject': {'crack': {'label': 'Crack', 'count': 2}}},
+        {'part_number': '3498', 'good': 305, 'reject': {'media': {'label': 'Media', 'count': 5}}},
+        {'part_number': '2124', 'good': 115, 'reject': {'spotface': {'label': 'Spot Face', 'count': 3}}},
+        {'part_number': '5656', 'good': 225, 'reject': {'deformation': {'label': 'Deformation', 'count': 4}}},
+        {'part_number': '7373', 'good': 335, 'reject': {'paint': {'label': 'Paint Defect', 'count': 1}}},
+        {'part_number': '9191', 'good': 155, 'reject': {'spotface': {'label': 'Spot Face', 'count': 2}}},
     ]
     return data
 

@@ -8,6 +8,18 @@ import os
 
 logger = setup_logger()
 
+
+def load_email_config():
+    # Load email configuration from environment variables
+    email_config = {
+        'server': os.getenv('EMAIL_SERVER'),
+        'from': os.getenv('EMAIL_FROM'),
+        'to': os.getenv('EMAIL_LIST').split(','),  # Split list if multiple recipients
+        'subject': os.getenv('EMAIL_SUBJECT')
+    }
+    return email_config
+
+
 def get_email_list():
     # Fetch the email list from the environment variable, split by comma
     email_list = os.getenv('EMAIL_LIST', '').split(',')
