@@ -32,6 +32,6 @@ build with:
 
 run with:
 
-`docker compose up` 
+`docker compose up -d` 
 
 
