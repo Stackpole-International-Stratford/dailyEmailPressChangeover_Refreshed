@@ -9,6 +9,7 @@ requires a .env file with the following variables:
 - EMAIL_FROM
 - EMAIL_SUBJECT
 - EMAIL_LIST
+- EMAIL_CC_LIST
 
 
 requires a report function that returns the report body in HTML
