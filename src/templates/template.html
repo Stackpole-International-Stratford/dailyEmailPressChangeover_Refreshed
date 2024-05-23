@@ -3,100 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <style>
-        * {
-            font-family: Arial, sans-serif;
-        }
         body {
             padding: 20px;
-            background-color: #f4f4f4;
+            background-color: #f9f9f9;
             color: #333;
+            font-family: Arial, sans-serif;
         }
         h1, h3, h5 {
-            color: #004085;
+            color: #333;
         }
         hr {
             border: 0;
             height: 1px;
-            background: #ddd;
+            background: #ccc;
             margin: 20px 0;
         }
-        table {
+        .card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+            padding: 10px 15px;
+            font-weight: bold;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
-            background-color: #fff;
+            margin-bottom: 0;
         }
-        table tr {
+        .table th, .table td {
+            padding: 10px 15px;
+            text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        table th, table td {
-            padding: 10px 20px;
-            text-align: left;
+        .table tr:last-child th, .table tr:last-child td {
+            border-bottom: none;
         }
-        table th {
-            background-color: #f8f9fa;
+        .table th {
+            background-color: #f1f1f1;
         }
-        table tr:nth-child(even) {
-            background-color: #f2f2f2;
+        .table tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
-    <h1>Changeovers</h1>
-    <h5>From: {{ start }} to: {{ end }}</h5>
-    <hr>
-    <h3>Completed Changeovers:</h3>
-    {% if data.completed_list|length < 1 %}
-        <p>No changeovers were completed in this time frame.</p>
-    {% else %}
-        <table>
-            {%- for row in data.completed_list -%}
-                <tr>
-                    <th>Machine:</th>
-                    <td>{{ row.machine }}</td>
-                </tr>
-                <tr>
-                    <th>Started:</th>
-                    <td>{{ row.updatedtime }}</td>
-                </tr>
-                <tr>
-                    <th>Setup Complete:</th>
-                    <td>{{ row.changeovertime }} ({{ row.setupdelta|humanize_precisedelta(minimum_unit='minutes') }})</td>
-                </tr>
-                <tr>
-                    <th>Dialin Complete:</th>
-                    <td>{{ row.completedtime }} ({{ row.dialindelta|humanize_precisedelta(minimum_unit='minutes') }})</td>
-                </tr>
-                <tr>
-                    <th>Changeover:</th>
-                    <td colspan="2">{{ row.problem }}</td>
-                </tr>
-                <tr>
-                    <th>Comments:</th>
-                    <td colspan="2">{{ row.comments }}</td>
-                </tr>
-            {%- endfor -%}
-        </table>
-    {% endif %}
-    <hr>
-    <h3>Pending Changeovers:</h3>
-    {% if data.pending_list|length < 1 %}
-        <p>No changeovers were pending in this time frame.</p>
-    {% else %}
-        <table>
-            <tr>
-                <th>Machine</th>
-                <th>Entered</th>
-                <th>Changeover</th>
-            </tr>
-            {%- for row in data.pending_list -%}
-                <tr>
-                    <td>{{ row.machine }}</td>
-                    <td>{{ row.called4helptime }}</td>
-                    <td>{{ row.problem }}</td>
-                </tr>
-            {%- endfor -%}
-        </table>
-    {% endif %}
+    <div class="container">
+        <h1>Changeovers</h1>
+        <h5>From: {{ start }} to: {{ end }}</h5>
+        <hr>
+        <h3>Completed Changeovers:</h3>
+        {% if data.completed_list|length < 1 %}
+            <p>No changeovers were completed in this time frame.</p>
+        {% else %}
+            {% for row in data.completed_list %}
+                <div class="card">
+                    <div class="card-header">
+                        Machine: {{ row.machine }} | Changeover: {{ row.problem }}
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td>Started:</td>
+                                <td>{{ row.updatedtime }}</td>
+                                <td>Setup Complete:</td>
+                                <td>{{ row.changeovertime }} ({{ row.setupdelta|humanize_precisedelta(minimum_unit='minutes') }})</td>
+                                <td>Dialin Complete:</td>
+                                <td>{{ row.completedtime }} ({{ row.dialindelta|humanize_precisedelta(minimum_unit='minutes') }})</td>
+                            </tr>
+                            <tr>
+                                <td>Comments:</td>
+                                <td colspan="5">{{ row.comments }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+        <hr>
+        <h3>Pending Changeovers:</h3>
+        {% if data.pending_list|length < 1 %}
+            <p>No changeovers were pending in this time frame.</p>
+        {% else %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Machine</th>
+                        <th>Entered</th>
+                        <th>Changeover</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data.pending_list %}
+                        <tr>
+                            <td>{{ row.machine }}</td>
+                            <td>{{ row.called4helptime }}</td>
+                            <td>{{ row.problem }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
 </body>
 </html>
