@@ -24,9 +24,11 @@ def load_email_config():
         'server': os.getenv('EMAIL_SERVER'),
         'from': os.getenv('EMAIL_FROM'),
         'to': os.getenv('EMAIL_LIST').split(','),  # Split list if multiple recipients
+        'cc': os.getenv('EMAIL_CC_LIST').split(','),  # Split list if multiple CC recipients
         'subject': os.getenv('EMAIL_SUBJECT')
     }
     return email_config
+
 
 def get_email_list():
     """
@@ -50,7 +52,11 @@ def send_email(report, email_config):
     message = MIMEMultipart("alternative")
     message["Subject"] = email_config['subject']
     message["From"] = email_config['from']
-    message["To"] = ", ".join(get_email_list())  # Use the dynamic list
+    message["To"] = ", ".join(email_config['to'])  # Use the dynamic list
+    message["Cc"] = ", ".join(email_config['cc'])  # Add CC recipients
+
+    # Combine TO and CC recipients
+    recipients = email_config['to'] + email_config['cc']
 
     # Attach the report as the email body
     msg_body = MIMEText(report, "html")
@@ -60,8 +66,8 @@ def send_email(report, email_config):
     try:
         # Connect to the email server and send the email
         server = smtplib.SMTP(email_config['server'])
-        server.sendmail(email_config['from'], email_config['to'], message.as_string())
-        logger.info("Email sent successfully to {}".format(email_config['to']))
+        server.sendmail(email_config['from'], recipients, message.as_string())
+        logger.info("Email sent successfully to {}".format(recipients))
     except smtplib.SMTPException as e:
         logger.error(f"Failed to send email: {e}")
         raise Exception("Failed to send email due to SMTP issue.") from e
@@ -75,3 +81,4 @@ def send_email(report, email_config):
                 server.quit()
             except smtplib.SMTPServerDisconnected:
                 pass  # Connection was already closed
+
